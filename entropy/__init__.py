@@ -1,3 +1,3 @@
-from .tetromino_entropy_state import TetrominoEntropyState
+from .tetromino_entropy_state import TetrominoEntropyState, TetrominoEntropy
 
-__all__ = ["TetrominoEntropyState"]
+__all__ = ["TetrominoEntropyState", "TetrominoEntropy"]

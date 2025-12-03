@@ -1,8 +1,13 @@
 from typing import TypedDict
 
+
+class TetrominoEntropy(TypedDict):
+    score: int
+    isCollapsed: bool
+
 class TetrominoEntropyState(TypedDict):
-    top: bool 
-    left: bool
-    right: bool
-    bottom: bool
+    top: TetrominoEntropy 
+    left: TetrominoEntropy
+    right: TetrominoEntropy
+    bottom: TetrominoEntropy
 

@@ -11,7 +11,7 @@ class  UpsideDownTetromino(Tetromino):
         self.surface = pygame.Surface((self.tile_size, self.tile_size), pygame.SRCALPHA)
         self.x = 0
         self.y = 0
-        self.neighbors = {"top": False, "bottom": False, "right": False, "left": False}
+        self.neighbors = {"top": {"score": 4, "isCollapsed": False}, "bottom": {"score": 2, "isCollapsed": False}, "right": {"score": 2, "isCollapsed": False}, "left": {"score": 2, "isCollapsed": False}}
 
 
     def draw_tetromino(self, screen: pygame.Surface, x: int, y: int) -> None:
