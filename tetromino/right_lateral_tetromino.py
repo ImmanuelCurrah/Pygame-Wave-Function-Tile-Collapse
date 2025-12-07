@@ -1,15 +1,12 @@
 from .tetromino import Tetromino
-from entropy import TetrominoEntropyState
 import pygame
 
 class RightLateralTetromino(Tetromino):
-    neighbors: TetrominoEntropyState
 
     def __init__(self):
         self.surface = pygame.Surface((self.tile_size, self.tile_size), pygame.SRCALPHA)
         self.x = 0
         self.y = 0
-        self.neighbors =  {"top": {"score": 2, "isCollapsed": False}, "bottom": {"score": 2, "isCollapsed": False}, "right": {"score": 4, "isCollapsed": False}, "left": {"score": 3, "isCollapsed": False}}
 
     def draw_tetromino(self, screen: pygame.Surface, x: int, y: int) -> None:       
         self.x = x
@@ -17,10 +14,4 @@ class RightLateralTetromino(Tetromino):
         pygame.draw.rect(self.surface, self.color, (0, self.cell_size, self.tile_size, self.cell_size))
         pygame.draw.rect(self.surface, self.color, (2 * self.cell_size, 0, self.cell_size, self.tile_size))
         screen.blit(self.surface, self.get_rect())
-
-    def neighbors(self) -> TetrominoEntropyState:
-        return self.neighbors
-
-    def entropy_score(self) -> int:
-        return 0
 
