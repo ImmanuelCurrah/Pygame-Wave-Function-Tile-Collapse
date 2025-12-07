@@ -1,25 +1,23 @@
 import pygame
-import random
+import math
 from window import Window
 from grid import Grid
 
-from tetromino import Tetromino, UprightTetromino, UpsideDownTetromino, RightLateralTetromino, LeftLateralTetromino
-
 pygame.init()
 
-window = Window()
-grid = Grid()
-screen = pygame.display.set_mode((1280, 1280))
+screen_width = 1280
+screen_height = 730
+screen = pygame.display.set_mode((screen_width, screen_height))
 
-start_x_pos = random.randint(10, 500)
-start_y_pos = random.randint(10, 500)
+window = Window()
+grid = Grid(25, 25, 25)
 
 while window.showWindow:
     window.handleWindow(pygame.event.get())
 
     screen.fill("white")
 
-    grid.draw_grid(screen, 25, 25, 15 * 3)
+    grid.draw_grid(screen)
 
     pygame.display.flip()
     pygame.time.Clock().tick(60)

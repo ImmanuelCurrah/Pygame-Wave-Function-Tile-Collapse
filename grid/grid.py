@@ -1,15 +1,21 @@
 import pygame
+from cell import Cell
 
 class Grid:
 
-    def __init__(self):
-        pass
+    grid = []
+    cell_size = 0
 
-    def draw_grid(self, screen, rows, cols, cell_size):
-        for row in range(rows):
-            for col in range(cols):
-                 x = col * cell_size
-                 y = row * cell_size
-                 rect = pygame.Rect(x, y, cell_size, cell_size)
-                 pygame.draw.rect(screen, "black", rect, width=1)
+    def __init__(self, rows, cols, cell_size):
+        self.grid = [[Cell() for _ in range(cols)] for _ in range(rows)]
+        self.cell_size = cell_size
+
+    def draw_grid(self, screen):
+
+        for row_index, rows in enumerate(self.grid):
+            for col_index, cell in enumerate(rows):
+                 x = col_index * self.cell_size
+                 y = row_index * self.cell_size
+
+                 cell.draw_cell(screen, x, y, self.cell_size)
 
