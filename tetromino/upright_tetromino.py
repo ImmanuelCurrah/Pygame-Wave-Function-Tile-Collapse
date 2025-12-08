@@ -3,16 +3,14 @@ import pygame
 
 class UprightTetromino(Tetromino):
 
-    def __init__(self):
-        self.surface = pygame.Surface((self.tile_size, self.tile_size), pygame.SRCALPHA)
-        self.x = 0
-        self.y = 0
+    def __init__(self, cell_size):
+        self.cell_size = cell_size
+        self.bar_thickness = cell_size // 3
+        self.surface = pygame.Surface((self.cell_size, self.cell_size), pygame.SRCALPHA)
 
 
     def draw_tetromino(self, screen: pygame.Surface, x: int, y: int) -> None:
-        self.x = x
-        self.y = y
-        pygame.draw.rect(self.surface, self.color, (0, 0, self.tile_size, self.cell_size))
-        pygame.draw.rect(self.surface, self.color, (self.cell_size, 0, self.cell_size, self.tile_size))
-        screen.blit(self.surface, self.get_rect())
+        pygame.draw.rect(self.surface, self.color, (0, 0, self.cell_size, self.bar_thickness))
+        pygame.draw.rect(self.surface, self.color, (self.bar_thickness, 0, self.bar_thickness, self.cell_size))
+        screen.blit(self.surface, (x, y))
 
