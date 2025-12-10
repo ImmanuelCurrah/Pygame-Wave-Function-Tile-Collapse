@@ -7,46 +7,31 @@ from entropy import Entropy
 class Grid:
 
     grid = []
-
     cell_size = 0
-
-    entropy: Entropy
-
+    entropy = Entropy()
     random_start = {}
 
     start_tetromino = random.choice(["Upright Tetromino", "Upside Down Tetromino", "Right Lateral Tetromino", "Left Lateral Tetromino"])
 
     def __init__(self, screen_width, screen_height):
         self.cell_size = math.gcd(screen_width, screen_height)
-
-        self.grid = [[Cell() for _ in range(screen_width // self.cell_size)] for _ in range(screen_height // self.cell_size)]
-
-        row_index, col_index = self.__get_random_grid_index()
-        self.random_start["row_index"] = row_index
-        self.random_start["col_index"] = col_index
-        self.entropy = Entropy(self.grid)
+        self.grid = [[Cell("Blank Cell") for _ in range(screen_width // self.cell_size)] for _ in range(screen_height // self.cell_size)]
+        self.random_start["row_index"] = random.randint(0, len(self.grid) -1)
+        self.random_start["col_index"] = random.randint(0, len(self.grid[self.random_start["row_index"]]) - 1)
 
     def draw_grid(self, screen):
-        is_start = self.entropy.is_start(self.grid)
-        start_coords, end_coords = self.entropy.get_start_end_coords()
+        lowest_entropy_cell = self.entropy.get_entropy_summary(self.grid)
+        print(lowest_entropy_cell)
 
-        for current_row_index, rows in enumerate(self.grid):
-            for current_col_index, cell in enumerate(rows):
-                x = current_col_index * self.cell_size
-                y = current_row_index * self.cell_size
+        for row, rows in enumerate(self.grid):
+            for col, cell in enumerate(rows):
+                x = col * self.cell_size
+                y = row * self.cell_size
 
-                if (current_row_index, current_col_index) in set(start_coords):
-                   cell.draw_cell(screen, x, y, self.cell_size, self.start_tetromino)
-                elif (current_col_index, current_row_index) in set(end_coords):
-                    cell.draw_cell(screen, x, y, self.cell_size, self.start_tetromino)
-                elif is_start and current_row_index == self.random_start["row_index"] and current_col_index == self.random_start["col_index"]:
-                    cell.draw_cell(screen, x, y, self.cell_size, self.start_tetromino)
+                if self.entropy.is_start(self.grid) and row == self.random_start["row_index"] and col == self.random_start["col_index"]:
+                    self.grid[row][col] = Cell(self.start_tetromino, True)
                 else:
-                    cell.draw_cell(screen, x, y, self.cell_size, "Blank Cell")
+                    self.grid[lowest_entropy_cell["coords"][0]][lowest_entropy_cell["coords"][1]] = Cell(random.choice(lowest_entropy_cell["options"]), True)
 
-    def __get_random_grid_index(self):
-        row_index = random.randint(0, len(self.grid) -1)
-        col_index = random.randint(0, len(self.grid[row_index]) - 1)
-
-        return row_index, col_index
+                cell.draw_cell(screen, x, y, self.cell_size)
     

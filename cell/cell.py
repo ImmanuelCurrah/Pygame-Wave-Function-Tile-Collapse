@@ -4,34 +4,33 @@ from tetromino import UprightTetromino, UpsideDownTetromino, RightLateralTetromi
 
 class Cell:
     
-    isCollapsed = False
+    is_collapsed = False
+    cell_type: str
 
-    def __init__(self):
-        pass
+    def __init__(self, cell_type, is_collapsed = False):
+        self.cell_type = cell_type
+        self.is_collapsed = is_collapsed
 
-    def collapse(self):
-        self.isCollapsed = True
+    def collapse(self, screen, x, y, cell_size, cell_type):
+        self.cell_type = cell_type
+        self.draw_cell(screen, x, y, cell_size)
 
-    def __draw_blank_cell(self, screen, x, y, cell_size):
+    def draw_blank_cell(self, screen, x, y, cell_size):
         rect = pygame.Rect(x, y, cell_size, cell_size)
         pygame.draw.rect(screen, "black", rect, width=1)
 
 
-    def draw_cell(self, screen, x, y, cell_size, cell_type):
-        if cell_type == "Blank Cell":
-            self.__draw_blank_cell(screen, x, y, cell_size)
-        elif cell_type == "Upright Tetromino":
-            self.collapse()
+    def draw_cell(self, screen, x, y, cell_size):
+        if self.cell_type == "Blank Cell":
+            self.draw_blank_cell(screen, x, y, cell_size)
+        elif self.cell_type == "Upright Tetromino":
             UprightTetromino(cell_size).draw_tetromino(screen, x, y)
-        elif cell_type == "Upside Down Tetromino":
-            self.collapse()
+        elif self.cell_type == "Upside Down Tetromino":
             UpsideDownTetromino(cell_size).draw_tetromino(screen, x, y)
-        elif cell_type == "Right Lateral Tetromino":
-            self.collapse()
+        elif self.cell_type == "Right Lateral Tetromino":
             RightLateralTetromino(cell_size).draw_tetromino(screen, x ,y)
-        elif cell_type == "Left Lateral Tetromino":
-            self.collapse()
+        elif self.cell_type == "Left Lateral Tetromino":
             LeftLateralTetromino(cell_size).draw_tetromino(screen, x, y)
         else:
-            self.__draw_blank_cell(screen, x, y, cell_size)
+            self.draw_blank_cell(screen, x, y, cell_size)
 

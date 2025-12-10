@@ -1,0 +1,48 @@
+import math
+from cell import Cell
+
+class Entropy:
+
+    def get_entropy_summary(self, grid):
+        rows_len = len(grid)
+        cols_len = len(grid[0])
+        lowest_entropy_coords = []
+        tetromino = ""
+
+        for row, row_cells in enumerate(grid):
+            for col, cell in enumerate(row_cells):
+                if cell.is_collapsed == False:
+                    current_cell_entropy_score = 0
+                    current_cell_tetromino_options = ["Blank Cell"]
+                    current_cell_type = cell.cell_type
+
+                    t = "Upright Tetromino"
+                    b = "Upside Down Tetromino"
+                    r = "Right Lateral Tetromino"
+                    l = "Left Lateral Tetromino"
+
+                    top = grid[row - 1][col].cell_type if row > 0 else None
+                    bottom = grid[row + 1][col].cell_type if row + 1 < rows_len else None
+                    print(row)
+                    print(col, cols_len, col + 1)
+                    print(col >= cols_len - 1)
+                    print(grid[row][15] if col >= cols_len - 1 else None)
+                    right = grid[row][col + 1].cell_type if col >= cols_len - 1 else None
+                    left = grid[row][col - 1].cell_type if col + 1 < cols_len else None
+
+                    if top == "Blank Cell":
+                        current_cell_tetromino_options.extend([t, b, r, l])
+                    elif top == t:
+                        current_cell_tetromino_options.extend([b, r, l])
+                    elif top == b:
+                        current_cell_tetromino_options.extend([t])
+                    elif top == r:
+                        current_cell_tetromino_options.extend([b, r, l])
+                    elif top == b:
+                        current_cell_tetromino_options.extend([b, r, l])
+                    
+
+        return lowest_entropy_coords, tetromino
+
+    def is_start(self, grid):
+        return all(all(isinstance(x, Cell) for x in row) for row in grid)
