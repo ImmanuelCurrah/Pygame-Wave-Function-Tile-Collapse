@@ -19,7 +19,7 @@ class Grid:
         self.random_start["row_index"] = random.randint(0, len(self.grid) -1)
         self.random_start["col_index"] = random.randint(0, len(self.grid[self.random_start["row_index"]]) - 1)
 
-    def draw_grid(self, screen):
+    def collapse(self, screen):
         lowest_entropy_cell = self.entropy.get_entropy_summary(self.grid)
 
         for row, rows in enumerate(self.grid):

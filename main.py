@@ -14,7 +14,7 @@ grid = Grid(screen_width, screen_height)
 while window.showWindow:
     window.handleWindow(pygame.event.get())
     screen.fill("white")
-    grid.draw_grid(screen)
+    grid.collapse(screen)
     pygame.display.flip()
     pygame.time.Clock().tick(60)
 
