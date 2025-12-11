@@ -71,7 +71,6 @@ class Entropy:
                         current_left_options.extend([b, t, r, blank])
 
                     if all(not arr for arr in [current_top_options, current_bottom_options, current_right_options, current_left_options]):
-                        print("top", top, "bottom", bottom, "right", right, "left", left, "coords", (row, col))
                         total_options = [blank]
                         entropy_score = len(total_options)
                         entropy_summary.append({"score": entropy_score, "options": total_options, "coords": (row, col)})
