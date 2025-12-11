@@ -21,7 +21,6 @@ class Grid:
 
     def draw_grid(self, screen):
         lowest_entropy_cell = self.entropy.get_entropy_summary(self.grid)
-        print(lowest_entropy_cell)
 
         for row, rows in enumerate(self.grid):
             for col, cell in enumerate(rows):
@@ -30,8 +29,9 @@ class Grid:
 
                 if self.entropy.is_start(self.grid) and row == self.random_start["row_index"] and col == self.random_start["col_index"]:
                     self.grid[row][col] = Cell(self.start_tetromino, True)
-                else:
-                    self.grid[lowest_entropy_cell["coords"][0]][lowest_entropy_cell["coords"][1]] = Cell(random.choice(lowest_entropy_cell["options"]), True)
+                elif len(lowest_entropy_cell) > 0:
+                    tetromino = "Blank Cell" if len(lowest_entropy_cell["options"]) == 1 else random.choice([opt for opt in lowest_entropy_cell["options"] if opt != "Blank Cell"])
+                    self.grid[lowest_entropy_cell["coords"][0]][lowest_entropy_cell["coords"][1]] = Cell(tetromino, True)
 
                 cell.draw_cell(screen, x, y, self.cell_size)
     

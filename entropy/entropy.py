@@ -70,12 +70,18 @@ class Entropy:
                     elif left == l:
                         current_left_options.extend([b, t, r, blank])
 
-                    total_options = list(set.intersection(*(set(lst) for lst in [current_top_options, current_bottom_options, current_right_options, current_left_options] if lst)))
-                    entropy_score = len(total_options)
-                    entropy_summary.append({"score": entropy_score, "options": total_options, "coords": (row, col)})
+                    if all(not arr for arr in [current_top_options, current_bottom_options, current_right_options, current_left_options]):
+                        print("top", top, "bottom", bottom, "right", right, "left", left, "coords", (row, col))
+                        total_options = [blank]
+                        entropy_score = len(total_options)
+                        entropy_summary.append({"score": entropy_score, "options": total_options, "coords": (row, col)})
+                    else:
+                        total_options = list(set.intersection(*(set(lst) for lst in [current_top_options, current_bottom_options, current_right_options, current_left_options] if lst)))
+                        entropy_score = len(total_options)
+                        entropy_summary.append({"score": entropy_score, "options": total_options, "coords": (row, col)})
 
         
-        return min(entropy_summary, key=lambda summary: summary["score"])
+        return min(entropy_summary, key=lambda summary: summary["score"]) if len(entropy_summary) > 0 else {}
 
     def is_start(self, grid):
         return all(all(isinstance(x, Cell) for x in row) for row in grid)

@@ -16,8 +16,7 @@ class Cell:
         self.draw_cell(screen, x, y, cell_size)
 
     def draw_blank_cell(self, screen, x, y, cell_size):
-        rect = pygame.Rect(x, y, cell_size, cell_size)
-        pygame.draw.rect(screen, "black", rect, width=1)
+        pygame.draw.rect(screen, "white", (x, y, cell_size, cell_size))
 
 
     def draw_cell(self, screen, x, y, cell_size):
