@@ -4,14 +4,8 @@ from cell import Cell
 
 class Entropy:
 
-    def get_lowest_entropy(self, grid):
-        lowest_score = 5        
-        lowest_coords = (0, 0)
-        lowest_options = []
-        lowest_entropy_cells = []
-
-        total_options: int
-        entropy_score: int
+    def get_lowest_entropy(self, grid):        
+        entropy_summary = []
 
         for row, row_cells in enumerate(grid):
             for col, cell in enumerate(row_cells):
@@ -21,6 +15,7 @@ class Entropy:
                     current_bottom_options = []
                     current_right_options = []
                     current_left_options = []
+                    all_options = [current_top_options, current_bottom_options, current_right_options, current_left_options]
 
                     blank = "Blank Cell"
                     t = "Upright Tetromino"
@@ -77,26 +72,8 @@ class Entropy:
                     elif left == l:
                         current_left_options.extend([b, t, r, blank])
 
-                    if all(not arr for arr in [current_top_options, current_bottom_options, current_right_options, current_left_options]):
-                        total_options = [blank]
-                        entropy_score = len(total_options)
+                    total_options = [blank] if all(not arr for arr in all_options) else list(set.intersection(*(set(lst) for lst in all_options if lst)))
+                    entropy_summary.append({"score": len(total_options), "coords": (row, col), "options": total_options})
 
-                        if entropy_score <= lowest_score:
-                            lowest_score = entropy_score
-                            lowest_coords = (row, col)
-                            lowest_options = total_options
-                            lowest_entropy_cells.append({"score": lowest_score, "coords": lowest_coords, "options": lowest_options})
-                    else:
-                        total_options = list(set.intersection(*(set(lst) for lst in [current_top_options, current_bottom_options, current_right_options, current_left_options] if lst)))
-                        entropy_score = len(total_options)
-
-                        if entropy_score <= lowest_score:
-                            lowest_score = entropy_score
-                            lowest_coords = (row, col)
-                            lowest_options = total_options
-                            lowest_entropy_cells.append({"score": lowest_score, "coords": lowest_coords, "options": lowest_options})
-
-        lowest_score_cell = min((c["score"] for c in lowest_entropy_cells), default=0)
-        lowest_matches = [c for c in lowest_entropy_cells if c["score"] == lowest_score_cell]
-
+        lowest_matches = [cell for cell in entropy_summary if cell["score"] == min((cell["score"] for cell in entropy_summary), default=0)]
         return lowest_matches[0] if len(lowest_matches) == 1 else (random.choice(lowest_matches) if len(lowest_matches) > 1 else None)
