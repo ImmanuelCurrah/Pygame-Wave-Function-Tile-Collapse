@@ -13,7 +13,7 @@ grid = Grid(screen_width, screen_height)
 
 while window.showWindow:
     window.handleWindow(pygame.event.get())
-    screen.fill("white")
+    screen.fill("black")
     grid.collapse(screen)
     pygame.display.flip()
     pygame.time.Clock().tick(30)
