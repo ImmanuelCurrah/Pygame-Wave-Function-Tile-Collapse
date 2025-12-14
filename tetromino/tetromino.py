@@ -6,7 +6,6 @@ class Tetromino(ABC):
     surface: pygame.Surface
     cell_size: int
     bar_thickness: int
-
     color = "purple"
 
     @abstractmethod

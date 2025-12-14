@@ -4,8 +4,8 @@ from grid import Grid
 
 pygame.init()
 
-screen_width = 1280
-screen_height = 720
+screen_width = 1000
+screen_height = 1000
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 window = Window()
@@ -16,6 +16,6 @@ while window.showWindow:
     screen.fill("white")
     grid.collapse(screen)
     pygame.display.flip()
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(30)
 
 pygame.quit()

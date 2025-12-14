@@ -7,9 +7,10 @@ class Cell:
     is_collapsed = False
     cell_type: str
 
-    def __init__(self, cell_type, is_collapsed = False):
+    def __init__(self, cell_type, is_collapsed):
         self.cell_type = cell_type
         self.is_collapsed = is_collapsed
+
 
     def collapse(self, screen, x, y, cell_size, cell_type):
         self.cell_type = cell_type
