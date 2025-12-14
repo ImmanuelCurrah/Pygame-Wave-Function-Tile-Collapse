@@ -28,7 +28,7 @@ class Entropy:
                     right = grid[row][col + 1].cell_type if col + 1 < len(row_cells) else None
                     left = grid[row][col - 1].cell_type if col > 0 else None
 
-                    if top == "Blank Cell":
+                    if top == blank:
                         current_top_options.extend([t, b, r, l, blank])
                     elif top == t:
                         current_top_options.extend([b, r, l, blank])
@@ -39,7 +39,7 @@ class Entropy:
                     elif top == l:
                         current_top_options.extend([b, r, l, blank])
 
-                    if bottom == "Blank Cell":
+                    if bottom == blank:
                         current_bottom_options.extend([t, b, r, l, blank])
                     elif bottom == t: 
                         current_bottom_options.extend([b, blank])
@@ -50,7 +50,7 @@ class Entropy:
                     elif bottom == l:
                         current_bottom_options.extend([r, l, t, blank])
 
-                    if right == "Blank Cell":
+                    if right == blank:
                         current_right_options.extend([t, b, r, l, blank])
                     elif right == t:
                         current_right_options.extend([t, l, b, blank])
@@ -61,7 +61,7 @@ class Entropy:
                     elif right == l:
                         current_right_options.extend([r, blank])
 
-                    if left == "Blank Tile":
+                    if left == blank:
                         current_left_options.extend([t, b, r, l, blank])
                     elif left == t:
                         current_left_options.extend([b, r, t, blank])
