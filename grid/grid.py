@@ -24,7 +24,7 @@ class Grid:
                 x = col * self.cell_size
                 y = row * self.cell_size
                
-                if lowest != None and len(lowest["options"]) >= 1:
+                if lowest != None:
                     tetromino = "Blank Cell" if len(lowest["options"]) == 1 else random.choice([opt for opt in lowest["options"] if opt != "Blank Cell"]) 
                     self.grid[lowest["coords"][0]][lowest["coords"][1]] = Cell(tetromino, True)
                     
