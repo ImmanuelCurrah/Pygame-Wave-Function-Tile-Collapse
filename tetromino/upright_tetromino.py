@@ -4,9 +4,7 @@ import pygame
 class UprightTetromino(Tetromino):
 
     def __init__(self, cell_size):
-        self.cell_size = cell_size
-        self.bar_thickness = cell_size // 3
-        self.surface = pygame.Surface((self.cell_size, self.cell_size), pygame.SRCALPHA)
+        super().__init__(cell_size)
 
     def draw_tetromino(self, screen: pygame.Surface, x: int, y: int) -> None:
         mid = self.cell_size // 2
